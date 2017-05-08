@@ -61,6 +61,32 @@ resource "aws_route_table" "public" {
 
 #route table association
 resource "aws_route_table_association" "public" {
-    subnet_id = "${aws_subnet.public.id}"
-    route_table_id = "${aws_route_table.public.id}"
+   subnet_id = "${aws_subnet.public.id}"
+   route_table_id = "${aws_route_table.public.id}"
+}
+
+#adding security group
+resource "aws_security_group" "test_vpc_sg" {
+  name = "test_vpc_sg"
+  description = "allow all traffic"
+
+  ingress {
+   from_port = 0
+   to_port = 65535
+   protocol = "tcp"
+   cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+   from_port = 0
+   to_port = 65535
+   protocol = "tcp"
+   cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  vpc_id = "${aws_vpc.main.id}"
+
+  tags {
+   Name = "test_SG"
+  }
 }
