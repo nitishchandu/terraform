@@ -66,7 +66,7 @@ resource "aws_route_table_association" "public" {
 }
 
 #adding security group
-resource "aws_security_group" "test_vpc_sg" {
+resource "aws_security_group" "test_vpc_sg {
   name = "test_vpc_sg"
   description = "allow all traffic"
 
