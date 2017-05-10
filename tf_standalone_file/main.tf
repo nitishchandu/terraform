@@ -6,7 +6,7 @@ provider "aws" {
 #this block creates vpc with the mentioned cidr and tag details
 resource "aws_vpc" "main" {
   
-  cidr_block = "192.169.0.0/16"
+  cidr_block = "193.170.0.0/16"
   instance_tenancy = "default"
 
   tags {
@@ -23,7 +23,7 @@ output "vpc_id" {
 #creates public subnet and default route table
 resource "aws_subnet" "public" {
   vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "192.169.0.0/16"
+  cidr_block = "193.170.1.0/16"
   availability_zone = "ap-south-1a"
 
   tags {
@@ -96,6 +96,18 @@ resource "aws_instance" "test_ec2"{
   ami = "ami-cdbdd7a2"
   subnet_id = "${aws_subnet.public.id}"
   instance_type = "t2.micro"
+  key_name = "demoInstance"
+  security_groups = ["${aws_security_group.test_vpc_sg.id}"]
+  associate_public_ip_address = "true"
+  disable_api_termination = "true"
+  root_block_device{
+    volume_type = "standard"
+    volume_size = 10 
+  }
+ 
+  volume_tags {
+    Name = "test_instance_root"
+  }
  
   tags {
     Name = "test_ec2_instance"
