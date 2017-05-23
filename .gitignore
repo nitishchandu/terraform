@@ -1,0 +1,5 @@
+ec2/terraform.tfstate
+ec2/terraform.tfstate.backup
+vpc/terraform.tfstate
+vpc/terraform.tfstate.backup
+
